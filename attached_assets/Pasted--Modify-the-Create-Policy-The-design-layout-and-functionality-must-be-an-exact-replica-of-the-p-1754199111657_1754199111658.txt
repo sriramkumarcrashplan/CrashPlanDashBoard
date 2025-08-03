@@ -1,0 +1,106 @@
+"Modify the 'Create Policy'. The design, layout, and functionality must be an exact replica of the provided wireframe screenshot. Pay close attention to all fields, buttons, labels, and the overall structure.
+
+Page Header & Breadcrumb Navigation:
+Display a breadcrumb navigation path at the top: Policy Management / Gmail Policies / Create Policy.
+
+Main Policy Information Section:
+Policy Name:
+
+A required text input field with the label "Policy Name *".
+
+Placeholder text should be "Enter Policy Name".
+
+Description:
+
+A multi-line text area field with the label "Description".
+
+It should be resizable, as indicated by the icon in the bottom-right corner.
+
+Tabbed Interface:
+Create a set of five tabs below the policy information section.
+
+The tabs should be labeled: General, Email Alert Configurations, User action preferences, Search, Advanced.
+
+The "General" tab must be the active and default tab displayed.
+
+'General' Tab Content (Two-Column Layout):
+Left Column:
+
+Backup Information Section:
+
+Heading: "Backup Information".
+
+Schedules:
+
+A dropdown menu labeled "Schedules".
+
+Include a link next to the label that says "Create New Schedule".
+
+The dropdown should show "sch1" as a selectable option.
+
+Purge deleted emails from the catalog after:
+
+A toggle switch, currently in the "off" position.
+
+Next to the toggle, an input field pre-filled with the greyed-out text "UNLIMITED".
+
+A label "days" to the right of the input field.
+
+Delete emails from the archive after:
+
+A toggle switch, currently in the "off" position.
+
+Next to the toggle, an input field pre-filled with the greyed-out text "UNLIMITED".
+
+A label "days" to the right of the input field.
+
+Asset Information Section:
+
+Heading: "Asset Information".
+
+Default Folders to Backup:
+
+An input field with the placeholder text "Enter Default Folders to Backup".
+
+An "Add" button to the right of the input field.
+
+Exclusion Folder Name:
+
+An input field with the placeholder text "Enter the full path of the folder".
+
+An "Add" button to the right of the input field.
+
+Right Column:
+
+Schedule Details Box:
+
+A styled container with the heading "Schedule Details".
+
+Display the selected schedule "sch1" and its time "9:45 hrs".
+
+Include a blue "Edit" button.
+
+Folders List Box:
+
+A container with a scrollbar for overflow content.
+
+Default Folders Section:
+
+A sub-heading "Default Folders".
+
+List the added default folders. In the screenshot, this shows "/" with a "remove" or "delete" icon (an 'x' in a circle) next to it.
+
+Excluded Folders Section:
+
+A sub-heading "Excluded Folders".
+
+List the added excluded folders. In the screenshot, this shows "spam" with a "remove" or "delete" icon next to it.
+
+Page Footer Actions:
+At the very bottom of the page, aligned to the right, provide two buttons:
+
+A "Cancel" button with a standard design.
+
+A primary, blue "Save" button.
+
+Ensure all fonts, colors, spacing, and element styles match the screenshot precisely to maintain visual consistency with the rest of the application."
