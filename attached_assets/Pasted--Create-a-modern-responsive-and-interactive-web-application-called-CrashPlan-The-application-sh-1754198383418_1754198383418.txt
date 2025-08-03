@@ -1,0 +1,105 @@
+"Create a modern, responsive, and interactive web application called 'CrashPlan.' The application should be a comprehensive backup and data management solution with a clean, user-friendly interface. The design should strictly adhere to the provided wireframes, maintaining the specified color palette, typography, and layout. The application must include an integrated chatbot for user support.
+
+Overall Design and Layout
+
+Color Palette: Use a professional and clean color scheme dominated by shades of blue, white, and gray, as shown in the wireframes.
+
+Typography: Employ a clear and legible sans-serif font, like the one in the wireframes, for all text elements.
+
+Layout: The application should feature a fixed sidebar for navigation on the left and a main content area on the right. The layout must be fully responsive and adapt seamlessly to different screen sizes.
+
+Key Features and Pages
+
+1. Dashboard
+
+
+
+Header: A fixed header containing the "CrashPlan" logo, a search bar, and user profile/settings icons.
+
+Sidebar: A navigation menu with links to the Dashboard, My Backup Vault, Settings, Manage Assets, Policy Management, Users, Support, and Downloads.
+
+Main Content:
+
+Display key metrics in individual cards, including Active Users, Active Assets, Active Assets with Full Backups Completed, and Assets Not Protected.
+
+Show statistics for Total Data Backed Up, Currently Running Backups, Completed Restores, and Users Without Active Assets.
+
+Include collapsible sections for Currently Running Backups and Currently Running Restores.
+
+A "Reports" section with links to Data Protection Scorecard, Backup Overview, Backup History, and more.
+
+2. My Backup Vault
+
+
+
+This page should display a message indicating that no assets have been configured for backup yet, as shown in the wireframe.
+
+3. Settings
+
+
+
+Provide options for Global Settings, Encryption Key Management, and Identity Provider Credentials, each in its own card with a brief description.
+
+4. Manage Assets
+
+
+
+Tabs: Implement a tabbed interface to switch between different asset types, such as Gmail and Google Drive.
+
+Asset List:
+
+Display the total number of assets.
+
+Include buttons for "Manage Assets in Bulk" and "Export Assets."
+
+A table listing all assets with columns for Asset Name, User Name, Status, and Asset Configured On.
+
+Each row should have an action button with options to manage the individual asset.
+
+5. Policy Management
+
+
+
+Tabs: Use tabs to navigate between Gmail Policies and Google Drive Policies.
+
+Main Content:
+
+Cards for "Policy Configuration" and "Policy Mapping."
+
+A table listing all policies with columns for Policy Name, Users Mapped to Policy, and Actions (View, Edit, Clone, Download).
+
+A "Create Policy" page with fields for Policy Name and Description.
+
+Tabs for General, Email Alert Configurations, User Action Preferences, Search, and Advanced settings.
+
+6. User Management
+
+
+
+User List:
+
+A search bar to find users by ID, Display Name, or Email Address.
+
+Buttons to "Create User," "Manage Users in Bulk," and "Export Users."
+
+A table with columns for User ID, Display Name, Email Address, Last Modified Time, and Status.
+
+Interactive Elements
+
+Buttons: All buttons should have a clean design with a slight shadow or hover effect to indicate interactivity.
+
+Search Bars: The search bars should be fully functional, allowing users to filter content in real-time.
+
+Tables: Tables should be sortable by clicking on the column headers.
+
+Integrated Chatbot
+
+Appearance: A circular chatbot icon should be fixed to the bottom-right corner of the screen.
+
+Functionality:
+
+When clicked, the icon should open a chat window.
+
+The chatbot should be able to answer user questions about the application, provide support, and guide users through various tasks.
+
+The chat interface should be clean and intuitive, with a clear distinction between user messages and bot responses."
