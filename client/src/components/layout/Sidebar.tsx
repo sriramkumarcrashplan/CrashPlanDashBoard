@@ -31,7 +31,7 @@ export default function Sidebar() {
 
   return (
     <nav 
-      className={`fixed left-0 top-16 bottom-0 bg-white dark:bg-card shadow-lg z-30 overflow-y-auto sidebar-transition ${
+      className={`fixed left-0 top-16 bottom-0 bg-nav-blue shadow-lg z-30 overflow-y-auto sidebar-transition ${
         isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'
       }`}
     >
@@ -42,7 +42,7 @@ export default function Sidebar() {
             variant="ghost"
             size="icon"
             onClick={toggleSidebar}
-            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+            className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
           >
             <ChevronLeft 
               className={`w-5 h-5 rotate-transition ${isCollapsed ? 'rotate-180' : ''}`} 
@@ -63,8 +63,8 @@ export default function Sidebar() {
                       isCollapsed ? 'justify-center px-2' : 'space-x-3 px-4'
                     } py-3 text-left rounded-lg transition-colors ${
                       isActive
-                        ? "bg-brand-blue-light dark:bg-brand-blue/20 text-brand-blue"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        ? "bg-white/20 text-white"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
                     }`}
                     title={isCollapsed ? item.name : undefined}
                   >
