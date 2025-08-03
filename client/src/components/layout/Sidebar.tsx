@@ -8,8 +8,11 @@ import {
   ClipboardList, 
   Users, 
   LifeBuoy, 
-  Download 
+  Download,
+  ChevronLeft
 } from "lucide-react";
+import { useSidebar } from "./SidebarProvider";
+import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -24,10 +27,29 @@ const navigation = [
 
 export default function Sidebar() {
   const [location] = useLocation();
+  const { isCollapsed, toggleSidebar } = useSidebar();
 
   return (
-    <nav className="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-gray-200 z-30 overflow-y-auto">
+    <nav 
+      className={`fixed left-0 top-16 bottom-0 bg-white dark:bg-card shadow-lg z-30 overflow-y-auto sidebar-transition ${
+        isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'
+      }`}
+    >
       <div className="p-4">
+        {/* Collapse Toggle Button */}
+        <div className="flex justify-end mb-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleSidebar}
+            className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+          >
+            <ChevronLeft 
+              className={`w-5 h-5 rotate-transition ${isCollapsed ? 'rotate-180' : ''}`} 
+            />
+          </Button>
+        </div>
+
         <ul className="space-y-2">
           {navigation.map((item) => {
             const isActive = location === item.href;
@@ -37,14 +59,19 @@ export default function Sidebar() {
               <li key={item.name}>
                 <Link href={item.href}>
                   <button
-                    className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg transition-colors ${
+                    className={`w-full flex items-center ${
+                      isCollapsed ? 'justify-center px-2' : 'space-x-3 px-4'
+                    } py-3 text-left rounded-lg transition-colors ${
                       isActive
-                        ? "bg-brand-blue-light text-brand-blue"
-                        : "text-gray-700 hover:bg-gray-100"
+                        ? "bg-brand-blue-light dark:bg-brand-blue/20 text-brand-blue"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                     }`}
+                    title={isCollapsed ? item.name : undefined}
                   >
-                    <Icon className="w-5 h-5" />
-                    <span className="font-medium">{item.name}</span>
+                    <Icon className="w-5 h-5 flex-shrink-0" />
+                    {!isCollapsed && (
+                      <span className="font-medium truncate">{item.name}</span>
+                    )}
                   </button>
                 </Link>
               </li>

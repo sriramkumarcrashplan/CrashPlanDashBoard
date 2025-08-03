@@ -24,33 +24,43 @@
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
   
-  /* Brand colors */
+  /* Brand colors - Updated to darker blue */
   --brand-blue: hsl(207, 90%, 54%);
   --brand-blue-dark: hsl(207, 90%, 45%);
   --brand-blue-light: hsl(207, 90%, 94%);
+  --nav-blue: hsl(211, 100%, 20%); /* #003366 equivalent */
+  --nav-blue-dark: hsl(211, 100%, 15%); /* Darker variant */
+  
+  /* Main background for light mode */
+  --main-background: hsl(0, 0%, 96%); /* #F5F5F5 */
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
+  --background: hsl(0, 0%, 7%); /* #121212 */
+  --foreground: hsl(0, 0%, 88%); /* #E0E0E0 */
   --muted: hsl(240, 3.7%, 15.9%);
   --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
+  --popover: hsl(0, 0%, 7%);
+  --popover-foreground: hsl(0, 0%, 88%);
+  --card: hsl(0, 0%, 12%); /* #1E1E1E */
+  --card-foreground: hsl(0, 0%, 88%);
   --border: hsl(240, 3.7%, 15.9%);
   --input: hsl(240, 3.7%, 15.9%);
   --primary: hsl(207, 90%, 54%);
   --primary-foreground: hsl(211, 100%, 99%);
   --secondary: hsl(240, 3.7%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
+  --secondary-foreground: hsl(0, 0%, 88%);
   --accent: hsl(240, 3.7%, 15.9%);
-  --accent-foreground: hsl(0, 0%, 98%);
+  --accent-foreground: hsl(0, 0%, 88%);
   --destructive: hsl(0, 62.8%, 30.6%);
   --destructive-foreground: hsl(0, 0%, 98%);
   --ring: hsl(240, 4.9%, 83.9%);
   --radius: 0.5rem;
+  
+  /* Dark mode specific colors */
+  --nav-blue: hsl(211, 50%, 18%); /* #1A2D45 - muted dark blue */
+  --nav-blue-dark: hsl(211, 50%, 14%); /* Darker variant */
+  --main-background: hsl(0, 0%, 7%); /* #121212 */
 }
 
 @layer base {
@@ -59,7 +69,8 @@
   }
 
   body {
-    @apply font-sans antialiased bg-gray-50 text-foreground;
+    @apply font-sans antialiased text-foreground;
+    background-color: var(--main-background);
   }
 }
 
@@ -98,5 +109,39 @@
   
   .hover\:border-brand-blue:hover {
     border-color: var(--brand-blue);
+  }
+
+  /* New navigation colors */
+  .bg-nav-blue {
+    background-color: var(--nav-blue);
+  }
+  
+  .bg-nav-blue-dark {
+    background-color: var(--nav-blue-dark);
+  }
+  
+  .text-nav-blue {
+    color: var(--nav-blue);
+  }
+
+  /* Sidebar animation classes */
+  .sidebar-collapsed {
+    width: 4rem;
+  }
+  
+  .sidebar-expanded {
+    width: 16rem;
+  }
+  
+  .sidebar-transition {
+    transition: width 0.3s ease-in-out;
+  }
+  
+  .rotate-180 {
+    transform: rotate(180deg);
+  }
+  
+  .rotate-transition {
+    transition: transform 0.3s ease-in-out;
   }
 }
