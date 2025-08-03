@@ -8,11 +8,8 @@ import {
   ClipboardList, 
   Users, 
   LifeBuoy, 
-  Download,
-  ChevronLeft
+  Download
 } from "lucide-react";
-import { useSidebar } from "./SidebarProvider";
-import { Button } from "@/components/ui/button";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
@@ -27,28 +24,11 @@ const navigation = [
 
 export default function Sidebar() {
   const [location] = useLocation();
-  const { isCollapsed, toggleSidebar } = useSidebar();
 
   return (
-    <nav 
-      className={`fixed left-0 top-16 bottom-0 bg-nav-blue shadow-lg z-30 overflow-y-auto sidebar-transition ${
-        isCollapsed ? 'sidebar-collapsed' : 'sidebar-expanded'
-      }`}
-    >
+    <nav className="fixed left-0 top-16 bottom-0 w-64 bg-nav-blue shadow-lg z-30 overflow-y-auto">
       <div className="p-4">
-        {/* Collapse Toggle Button */}
-        <div className="flex justify-end mb-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleSidebar}
-            className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
-          >
-            <ChevronLeft 
-              className={`w-5 h-5 rotate-transition ${isCollapsed ? 'rotate-180' : ''}`} 
-            />
-          </Button>
-        </div>
+
 
         <ul className="space-y-2">
           {navigation.map((item) => {
@@ -59,19 +39,14 @@ export default function Sidebar() {
               <li key={item.name}>
                 <Link href={item.href}>
                   <button
-                    className={`w-full flex items-center ${
-                      isCollapsed ? 'justify-center px-2' : 'space-x-3 px-4'
-                    } py-3 text-left rounded-lg transition-colors ${
+                    className={`w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg transition-colors ${
                       isActive
                         ? "bg-white/20 text-white"
                         : "text-white/80 hover:text-white hover:bg-white/10"
                     }`}
-                    title={isCollapsed ? item.name : undefined}
                   >
                     <Icon className="w-5 h-5 flex-shrink-0" />
-                    {!isCollapsed && (
-                      <span className="font-medium truncate">{item.name}</span>
-                    )}
+                    <span className="font-medium truncate">{item.name}</span>
                   </button>
                 </Link>
               </li>

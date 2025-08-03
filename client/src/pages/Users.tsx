@@ -30,18 +30,18 @@ export default function Users() {
           <div className="h-8 bg-gray-200 rounded w-48 mb-2"></div>
           <div className="h-5 bg-gray-200 rounded w-96"></div>
         </div>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="p-6 border-b border-gray-200 animate-pulse">
-            <div className="h-10 bg-gray-200 rounded w-full"></div>
+        <div className="bg-card rounded-lg shadow-sm border border-border">
+          <div className="p-6 border-b border-border animate-pulse">
+            <div className="h-10 bg-muted rounded w-full"></div>
           </div>
           <div className="p-6 space-y-4">
             {[...Array(5)].map((_, i) => (
-              <div key={i} className="flex items-center justify-between py-3 border-b border-gray-100 animate-pulse">
+              <div key={i} className="flex items-center justify-between py-3 border-b border-border animate-pulse">
                 <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 rounded w-24"></div>
-                  <div className="h-3 bg-gray-200 rounded w-48"></div>
+                  <div className="h-4 bg-muted rounded w-24"></div>
+                  <div className="h-3 bg-muted rounded w-48"></div>
                 </div>
-                <div className="h-4 bg-gray-200 rounded w-16"></div>
+                <div className="h-4 bg-muted rounded w-16"></div>
               </div>
             ))}
           </div>
@@ -53,11 +53,11 @@ export default function Users() {
   return (
     <div className="space-y-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-        <p className="text-gray-600 mt-1">Manage users and their backup configurations</p>
+        <h1 className="text-2xl font-bold text-foreground">User Management</h1>
+        <p className="text-muted-foreground mt-1">Manage users and their backup configurations</p>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+      <div className="bg-card rounded-lg shadow-sm border border-border">
         <div className="p-6 border-b border-gray-200">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
             <div className="flex-1 max-w-md">
