@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrashPlan - Backup & Data Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'brand-blue': '#2563eb',
+                        'brand-blue-dark': '#1e40af',
+                        'brand-blue-light': '#dbeafe',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-inter">
+    <!-- Fixed Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-40 h-16">
+        <div class="flex items-center justify-between h-full px-6">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-brand-blue text-2xl"></i>
+                    <span class="text-xl font-bold text-gray-900">CrashPlan</span>
+                </div>
+            </div>
+            
+            <div class="flex-1 max-w-md mx-6">
+                <div class="relative">
+                    <input type="text" placeholder="Search..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fas fa-bell text-lg"></i>
+                </button>
+                <button class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors">
+                    <i class="fas fa-cog text-lg"></i>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-brand-blue rounded-full flex items-center justify-center">
+                        <span class="text-white text-sm font-medium">JD</span>
+                    </div>
+                    <span class="text-sm font-medium text-gray-700">John Doe</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Fixed Sidebar -->
+    <nav class="fixed left-0 top-16 bottom-0 w-64 bg-white border-r border-gray-200 z-30 overflow-y-auto">
+        <div class="p-4">
+            <ul class="space-y-2">
+                <li>
+                    <button onclick="showPage('dashboard')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors active" data-page="dashboard">
+                        <i class="fas fa-tachometer-alt text-lg"></i>
+                        <span class="font-medium">Dashboard</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showPage('backup-vault')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors" data-page="backup-vault">
+                        <i class="fas fa-vault text-lg"></i>
+                        <span class="font-medium">My Backup Vault</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showPage('settings')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors" data-page="settings">
+                        <i class="fas fa-cog text-lg"></i>
+                        <span class="font-medium">Settings</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showPage('manage-assets')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors" data-page="manage-assets">
+                        <i class="fas fa-server text-lg"></i>
+                        <span class="font-medium">Manage Assets</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showPage('policy-management')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors" data-page="policy-management">
+                        <i class="fas fa-clipboard-list text-lg"></i>
+                        <span class="font-medium">Policy Management</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showPage('users')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors" data-page="users">
+                        <i class="fas fa-users text-lg"></i>
+                        <span class="font-medium">Users</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showPage('support')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors" data-page="support">
+                        <i class="fas fa-life-ring text-lg"></i>
+                        <span class="font-medium">Support</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="showPage('downloads')" class="nav-item w-full flex items-center space-x-3 px-4 py-3 text-left rounded-lg hover:bg-gray-100 transition-colors" data-page="downloads">
+                        <i class="fas fa-download text-lg"></i>
+                        <span class="font-medium">Downloads</span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="ml-64 mt-16 p-6">
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page-content">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Dashboard</h1>
+                <p class="text-gray-600 mt-1">Overview of your backup and data management status</p>
+            </div>
+
+            <!-- Key Metrics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Active Users</p>
+                            <p class="text-2xl font-bold text-gray-900 mt-1">1,247</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <span class="text-sm text-green-600 font-medium">+12%</span>
+                        <span class="text-sm text-gray-500 ml-2">from last month</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Active Assets</p>
+                            <p class="text-2xl font-bold text-gray-900 mt-1">3,842</p>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-server text-blue-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <span class="text-sm text-green-600 font-medium">+8%</span>
+                        <span class="text-sm text-gray-500 ml-2">from last month</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Full Backups Completed</p>
+                            <p class="text-2xl font-bold text-gray-900 mt-1">2,194</p>
+                        </div>
+                        <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <span class="text-sm text-green-600 font-medium">+15%</span>
+                        <span class="text-sm text-gray-500 ml-2">from last week</span>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-gray-600">Assets Not Protected</p>
+                            <p class="text-2xl font-bold text-red-600 mt-1">47</p>
+                        </div>
+                        <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex items-center">
+                        <span class="text-sm text-red-600 font-medium">-3%</span>
+                        <span class="text-sm text-gray-500 ml-2">from last week</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Total Data Backed Up</h3>
+                    <p class="text-2xl font-bold text-gray-900">247.8 TB</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Currently Running Backups</h3>
+                    <p class="text-2xl font-bold text-blue-600">23</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Completed Restores</h3>
+                    <p class="text-2xl font-bold text-green-600">156</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <h3 class="text-sm font-medium text-gray-600 mb-2">Users Without Active Assets</h3>
+                    <p class="text-2xl font-bold text-orange-600">12</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                <!-- Currently Running Backups -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">Currently Running Backups</h3>
+                            <button onclick="toggleSection('running-backups')" class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-chevron-down transform transition-transform" id="running-backups-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="running-backups-content" class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <div>
+                                    <p class="font-medium text-gray-900">john.doe@company.com</p>
+                                    <p class="text-sm text-gray-500">Gmail Backup</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                                    <span class="text-sm text-blue-600 font-medium">In Progress</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <div>
+                                    <p class="font-medium text-gray-900">sarah.wilson@company.com</p>
+                                    <p class="text-sm text-gray-500">Google Drive Backup</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                                    <span class="text-sm text-blue-600 font-medium">In Progress</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Currently Running Restores -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-900">Currently Running Restores</h3>
+                            <button onclick="toggleSection('running-restores')" class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-chevron-down transform transition-transform" id="running-restores-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="running-restores-content" class="p-6">
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between py-3 border-b border-gray-100">
+                                <div>
+                                    <p class="font-medium text-gray-900">mike.chen@company.com</p>
+                                    <p class="text-sm text-gray-500">Gmail Restore</p>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="text-sm text-green-600 font-medium">Restoring</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <h3 class="text-lg font-semibold text-gray-900">Reports</h3>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <button class="text-left p-4 border border-gray-200 rounded-lg hover:border-brand-blue hover:bg-brand-blue-light transition-colors">
+                            <i class="fas fa-chart-bar text-brand-blue text-lg mb-2"></i>
+                            <p class="font-medium text-gray-900">Data Protection Scorecard</p>
+                        </button>
+                        <button class="text-left p-4 border border-gray-200 rounded-lg hover:border-brand-blue hover:bg-brand-blue-light transition-colors">
+                            <i class="fas fa-chart-line text-brand-blue text-lg mb-2"></i>
+                            <p class="font-medium text-gray-900">Backup Overview</p>
+                        </button>
+                        <button class="text-left p-4 border border-gray-200 rounded-lg hover:border-brand-blue hover:bg-brand-blue-light transition-colors">
+                            <i class="fas fa-history text-brand-blue text-lg mb-2"></i>
+                            <p class="font-medium text-gray-900">Backup History</p>
+                        </button>
+                        <button class="text-left p-4 border border-gray-200 rounded-lg hover:border-brand-blue hover:bg-brand-blue-light transition-colors">
+                            <i class="fas fa-file-alt text-brand-blue text-lg mb-2"></i>
+                            <p class="font-medium text-gray-900">Custom Reports</p>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Backup Vault Page -->
+        <div id="backup-vault" class="page-content hidden">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">My Backup Vault</h1>
+                <p class="text-gray-600 mt-1">Manage your backed up data and files</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-12 text-center">
+                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-vault text-gray-400 text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">No Assets Configured</h3>
+                <p class="text-gray-500 mb-6">You haven't configured any assets for backup yet. Get started by adding your first backup asset.</p>
+                <button class="bg-brand-blue text-white px-6 py-3 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                    Configure First Asset
+                </button>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings" class="page-content hidden">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Settings</h1>
+                <p class="text-gray-600 mt-1">Configure your global settings and security options</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-globe text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Global Settings</h3>
+                    <p class="text-gray-600 mb-4">Configure system-wide settings, notifications, and default backup preferences.</p>
+                    <button class="w-full bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                        Manage Global Settings
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-key text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Encryption Key Management</h3>
+                    <p class="text-gray-600 mb-4">Manage encryption keys, configure security policies, and set up data protection.</p>
+                    <button class="w-full bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                        Manage Encryption
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-id-card text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Identity Provider Credentials</h3>
+                    <p class="text-gray-600 mb-4">Configure authentication settings and manage identity provider connections.</p>
+                    <button class="w-full bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                        Manage Credentials
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Assets Page -->
+        <div id="manage-assets" class="page-content hidden">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Manage Assets</h1>
+                <p class="text-gray-600 mt-1">View and manage all your backup assets</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="border-b border-gray-200 mb-6">
+                <nav class="-mb-px flex space-x-8">
+                    <button onclick="showAssetTab('gmail')" class="asset-tab py-4 px-1 border-b-2 font-medium text-sm active" data-tab="gmail">
+                        <i class="fab fa-google mr-2"></i>Gmail
+                    </button>
+                    <button onclick="showAssetTab('drive')" class="asset-tab py-4 px-1 border-b-2 font-medium text-sm" data-tab="drive">
+                        <i class="fab fa-google-drive mr-2"></i>Google Drive
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Asset Content -->
+            <div id="gmail-assets" class="asset-content">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Gmail Assets</h3>
+                                <p class="text-sm text-gray-600 mt-1">Total: 1,247 assets</p>
+                            </div>
+                            <div class="flex space-x-3">
+                                <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium">
+                                    Manage Assets in Bulk
+                                </button>
+                                <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                                    Export Assets
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        Asset Name <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        User Name <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        Status <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        Asset Configured On <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <i class="fab fa-google text-red-500 mr-3"></i>
+                                            <span class="font-medium text-gray-900">john.doe@company.com</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">John Doe</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">2024-01-15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <button class="text-brand-blue hover:text-brand-blue-dark font-medium text-sm">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <i class="fab fa-google text-red-500 mr-3"></i>
+                                            <span class="font-medium text-gray-900">sarah.wilson@company.com</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">Sarah Wilson</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">2024-01-14</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <button class="text-brand-blue hover:text-brand-blue-dark font-medium text-sm">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="drive-assets" class="asset-content hidden">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">Google Drive Assets</h3>
+                                <p class="text-sm text-gray-600 mt-1">Total: 892 assets</p>
+                            </div>
+                            <div class="flex space-x-3">
+                                <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium">
+                                    Manage Assets in Bulk
+                                </button>
+                                <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                                    Export Assets
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        Asset Name <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        User Name <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        Status <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                        Asset Configured On <i class="fas fa-sort ml-1"></i>
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <i class="fab fa-google-drive text-blue-500 mr-3"></i>
+                                            <span class="font-medium text-gray-900">mike.chen@company.com</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">Mike Chen</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">2024-01-12</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <button class="text-brand-blue hover:text-brand-blue-dark font-medium text-sm">
+                                            <i class="fas fa-ellipsis-v"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Policy Management Page -->
+        <div id="policy-management" class="page-content hidden">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Policy Management</h1>
+                <p class="text-gray-600 mt-1">Create and manage backup policies for your organization</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="border-b border-gray-200 mb-6">
+                <nav class="-mb-px flex space-x-8">
+                    <button onclick="showPolicyTab('gmail-policies')" class="policy-tab py-4 px-1 border-b-2 font-medium text-sm active" data-tab="gmail-policies">
+                        <i class="fab fa-google mr-2"></i>Gmail Policies
+                    </button>
+                    <button onclick="showPolicyTab('drive-policies')" class="policy-tab py-4 px-1 border-b-2 font-medium text-sm" data-tab="drive-policies">
+                        <i class="fab fa-google-drive mr-2"></i>Google Drive Policies
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Policy Content -->
+            <div id="gmail-policies" class="policy-content">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Policy Configuration</h3>
+                        <p class="text-gray-600 mb-4">Create and modify backup policies for Gmail accounts.</p>
+                        <button onclick="showModal('create-policy')" class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                            Create New Policy
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Policy Mapping</h3>
+                        <p class="text-gray-600 mb-4">Map policies to users and groups for automatic application.</p>
+                        <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium">
+                            Manage Mappings
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">Gmail Policies</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Policy Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users Mapped to Policy</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Default Gmail Policy</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">847 users</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex space-x-2">
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">View</button>
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">Edit</button>
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">Clone</button>
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">Download</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="drive-policies" class="policy-content hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Policy Configuration</h3>
+                        <p class="text-gray-600 mb-4">Create and modify backup policies for Google Drive accounts.</p>
+                        <button onclick="showModal('create-policy')" class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                            Create New Policy
+                        </button>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Policy Mapping</h3>
+                        <p class="text-gray-600 mb-4">Map policies to users and groups for automatic application.</p>
+                        <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium">
+                            Manage Mappings
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">Google Drive Policies</h3>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Policy Name</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Users Mapped to Policy</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">Standard Drive Policy</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-gray-600">623 users</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex space-x-2">
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">View</button>
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">Edit</button>
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">Clone</button>
+                                            <button class="text-brand-blue hover:text-brand-blue-dark text-sm font-medium">Download</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Page -->
+        <div id="users" class="page-content hidden">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">User Management</h1>
+                <p class="text-gray-600 mt-1">Manage users and their backup configurations</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
+                        <div class="flex-1 max-w-md">
+                            <div class="relative">
+                                <input type="text" placeholder="Search by User ID, Display Name, or Email Address..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent">
+                                <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                                Create User
+                            </button>
+                            <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium">
+                                Manage Users in Bulk
+                            </button>
+                            <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors font-medium">
+                                Export Users
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                    User ID <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                    Display Name <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                    Email Address <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                    Last Modified Time <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100">
+                                    Status <i class="fas fa-sort ml-1"></i>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">USR-001</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">John Doe</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">john.doe@company.com</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">2024-01-15 10:30 AM</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button class="text-brand-blue hover:text-brand-blue-dark font-medium text-sm">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">USR-002</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">Sarah Wilson</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">sarah.wilson@company.com</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-gray-600">2024-01-14 3:45 PM</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Pending</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <button class="text-brand-blue hover:text-brand-blue-dark font-medium text-sm">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Support Page -->
+        <div id="support" class="page-content hidden">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Support</h1>
+                <p class="text-gray-600 mt-1">Get help and access support resources</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-book text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Documentation</h3>
+                    <p class="text-gray-600 mb-4">Access comprehensive guides and documentation for CrashPlan.</p>
+                    <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                        View Documentation
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-headset text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Contact Support</h3>
+                    <p class="text-gray-600 mb-4">Get in touch with our support team for personalized assistance.</p>
+                    <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                        Contact Support
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Downloads Page -->
+        <div id="downloads" class="page-content hidden">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-gray-900">Downloads</h1>
+                <p class="text-gray-600 mt-1">Download CrashPlan clients and tools</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Available Downloads</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <i class="fab fa-windows text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-medium text-gray-900">CrashPlan for Windows</h4>
+                                <p class="text-sm text-gray-500">Version 11.0.1 - Windows 10, 11</p>
+                            </div>
+                        </div>
+                        <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                            Download
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between p-4 border border-gray-200 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <i class="fab fa-apple text-gray-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-medium text-gray-900">CrashPlan for Mac</h4>
+                                <p class="text-sm text-gray-500">Version 11.0.1 - macOS 10.15+</p>
+                            </div>
+                        </div>
+                        <button class="bg-brand-blue text-white px-4 py-2 rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Create Policy Modal -->
+    <div id="create-policy-modal" class="modal fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="modal-content bg-white rounded-lg shadow-xl max-w-4xl mx-auto mt-20 max-h-full overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-900">Create Policy</h3>
+                    <button onclick="closeModal('create-policy')" class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Policy Name</label>
+                    <input type="text" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent" placeholder="Enter policy name">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <textarea rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent" placeholder="Enter policy description"></textarea>
+                </div>
+
+                <!-- Policy Tabs -->
+                <div class="border-b border-gray-200 mb-6">
+                    <nav class="-mb-px flex space-x-8">
+                        <button class="py-2 px-1 border-b-2 border-brand-blue font-medium text-sm text-brand-blue">General</button>
+                        <button class="py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">Email Alert Configurations</button>
+                        <button class="py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">User Action Preferences</button>
+                        <button class="py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">Search</button>
+                        <button class="py-2 px-1 border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700">Advanced</button>
+                    </nav>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-brand-blue focus:ring-brand-blue">
+                            <span class="ml-2 text-sm text-gray-700">Enable automatic backup</span>
+                        </label>
+                    </div>
+                    <div>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="rounded border-gray-300 text-brand-blue focus:ring-brand-blue">
+                            <span class="ml-2 text-sm text-gray-700">Backup all emails by default</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-gray-200 flex justify-end space-x-3">
+                <button onclick="closeModal('create-policy')" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+                    Cancel
+                </button>
+                <button class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-brand-blue-dark transition-colors font-medium">
+                    Create Policy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div id="chatbot-button" class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleChatbot()" class="w-14 h-14 bg-brand-blue text-white rounded-full shadow-lg hover:bg-brand-blue-dark transition-all duration-300 flex items-center justify-center hover:scale-105">
+            <i class="fas fa-comments text-xl"></i>
+        </button>
+    </div>
+
+    <div id="chatbot-window" class="fixed bottom-24 right-6 w-80 h-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 hidden">
+        <div class="p-4 bg-brand-blue text-white rounded-t-lg">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-robot"></i>
+                    <span class="font-medium">CrashPlan Assistant</span>
+                </div>
+                <button onclick="toggleChatbot()" class="text-white hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-4 h-64 overflow-y-auto" id="chat-messages">
+            <div class="mb-4">
+                <div class="bg-gray-100 rounded-lg p-3 text-sm">
+                    <p class="text-gray-700">Hello! I'm your CrashPlan assistant. How can I help you today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-gray-200">
+            <div class="flex space-x-2">
+                <input type="text" id="chat-input" placeholder="Type your message..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-blue focus:border-transparent text-sm">
+                <button onclick="sendMessage()" class="px-4 py-2 bg-brand-blue text-white rounded-lg hover:bg-brand-blue-dark transition-colors">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-content');
+            pages.forEach(page => page.classList.add('hidden'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Update navigation active state
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active', 'bg-brand-blue-light', 'text-brand-blue');
+                item.classList.add('text-gray-700');
+            });
+            
+            const activeItem = document.querySelector(`[data-page="${pageId}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active', 'bg-brand-blue-light', 'text-brand-blue');
+                activeItem.classList.remove('text-gray-700');
+            }
+        }
+
+        // Asset Tab Navigation
+        function showAssetTab(tabId) {
+            // Hide all asset content
+            const contents = document.querySelectorAll('.asset-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            // Show selected content
+            document.getElementById(tabId + '-assets').classList.remove('hidden');
+            
+            // Update tab active state
+            const tabs = document.querySelectorAll('.asset-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('border-brand-blue', 'text-brand-blue');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            const activeTab = document.querySelector(`[data-tab="${tabId}"]`);
+            if (activeTab) {
+                activeTab.classList.add('border-brand-blue', 'text-brand-blue');
+                activeTab.classList.remove('border-transparent', 'text-gray-500');
+            }
+        }
+
+        // Policy Tab Navigation
+        function showPolicyTab(tabId) {
+            // Hide all policy content
+            const contents = document.querySelectorAll('.policy-content');
+            contents.forEach(content => content.classList.add('hidden'));
+            
+            // Show selected content
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            // Update tab active state
+            const tabs = document.querySelectorAll('.policy-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('border-brand-blue', 'text-brand-blue');
+                tab.classList.add('border-transparent', 'text-gray-500');
+            });
+            
+            const activeTab = document.querySelector(`[data-tab="${tabId}"]`);
+            if (activeTab) {
+                activeTab.classList.add('border-brand-blue', 'text-brand-blue');
+                activeTab.classList.remove('border-transparent', 'text-gray-500');
+            }
+        }
+
+        // Toggle Collapsible Sections
+        function toggleSection(sectionId) {
+            const content = document.getElementById(sectionId + '-content');
+            const icon = document.getElementById(sectionId + '-icon');
+            
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Modal Functions
+        function showModal(modalId) {
+            document.getElementById(modalId + '-modal').classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId + '-modal').classList.add('hidden');
+        }
+
+        // Chatbot Functions
+        function toggleChatbot() {
+            const chatWindow = document.getElementById('chatbot-window');
+            chatWindow.classList.toggle('hidden');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (message) {
+                const messagesContainer = document.getElementById('chat-messages');
+                
+                // Add user message
+                const userMessage = document.createElement('div');
+                userMessage.className = 'mb-4 text-right';
+                userMessage.innerHTML = `
+                    <div class="bg-brand-blue text-white rounded-lg p-3 text-sm inline-block max-w-xs">
+                        <p>${message}</p>
+                    </div>
+                `;
+                messagesContainer.appendChild(userMessage);
+                
+                // Add bot response (simulated)
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'mb-4';
+                    botMessage.innerHTML = `
+                        <div class="bg-gray-100 rounded-lg p-3 text-sm">
+                            <p class="text-gray-700">Thank you for your message. I'm here to help with any CrashPlan questions you may have!</p>
+                        </div>
+                    `;
+                    messagesContainer.appendChild(botMessage);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                }, 1000);
+                
+                input.value = '';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+
+        // Enter key support for chat
+        document.getElementById('chat-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+
+        // Initialize default page
+        (function() {
+            showPage('dashboard');
+            showAssetTab('gmail');
+            showPolicyTab('gmail-policies');
+        })();
+    </script>
+</body>
+</html>
