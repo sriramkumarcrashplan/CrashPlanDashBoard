@@ -1,5 +1,30 @@
-node_modules
+# ## General #####################################
+# OS-generated files
 .DS_Store
-server/public
-vite.config.ts.*
+
+# Archives
 *.tar.gz
+
+
+# ## Dependencies ################################
+# Node.js dependencies
+/node_modules/
+
+
+# ## Build & Local Dev ###########################
+# Compiled output folder
+/dist/
+
+# Local development environment files
+/.local/
+
+# Statically served folder from server (if applicable)
+/server/public/
+
+
+# ## Project Specific ############################
+# Temporary or backup config files
+vite.config.ts.*
+
+# Attached assets folder
+/attached_assets/
